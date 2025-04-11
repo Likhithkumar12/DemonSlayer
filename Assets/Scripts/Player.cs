@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
     public PLayerDashState pLayerDashState { get; private set; }
     public PlayerWallSlideStatw playerWallSlideStatw { get; private set; }
     public PlayerWallJUmpstate playerWallJUmpstate { get; private set; }
+    public PrimaryattackState primaryattackState { get; private set; }
     public Animator Animator { get; private set; }
     public Rigidbody2D rigidbody2D { get; private set; }
 
@@ -42,6 +43,7 @@ public class Player : MonoBehaviour
         pLayerDashState = new PLayerDashState(PllayerStateMachine, this, "Dash");
         playerWallSlideStatw = new PlayerWallSlideStatw(PllayerStateMachine, this, "WallSlide");
         playerWallJUmpstate = new PlayerWallJUmpstate(PllayerStateMachine, this, "Jump");
+        primaryattackState = new PrimaryattackState(PllayerStateMachine, this, "Attack");
     }
     private void Start()
     {
@@ -57,6 +59,8 @@ public class Player : MonoBehaviour
     }
     public bool iusgrounded() => Physics2D.Raycast(groundcheck.position, Vector2.down, groundcheckdistance, groundlayer);
     public bool iswall() => Physics2D.Raycast(wallcheck.position, Vector2.right * facinngdir, wallcheckdistance, groundlayer);
+
+    public void  AnimationTrigger() => PllayerStateMachine.Currentstate.FinishAnimationTrigger();
     public void Setvelocity(float xvelocity, float yvelocity)
     {
         rigidbody2D.linearVelocity = new Vector2(xvelocity * movespeed, yvelocity);

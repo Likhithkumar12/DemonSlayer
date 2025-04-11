@@ -6,6 +6,7 @@ public class PlayerState
     protected string animboolname;
     protected float xinput;
     protected float statetimer;
+    protected bool triggercalled;
     public PlayerState(PllayerStateMachine _pllayerStateMachine, Player _player, string _animboolname)
     {
         this.pllayerStateMachine = _pllayerStateMachine;
@@ -15,10 +16,11 @@ public class PlayerState
     public virtual void Enter()
     {
         player.Animator.SetBool(animboolname, true);
+        triggercalled = false;
     }
     public virtual void Update()
     {
-        statetimer-= Time.deltaTime;
+        statetimer -= Time.deltaTime;
         xinput = Input.GetAxisRaw("Horizontal");
         player.Animator.SetFloat("yvelocity", player.rigidbody2D.linearVelocity.y);
 
@@ -27,6 +29,10 @@ public class PlayerState
     {
         player.Animator.SetBool(animboolname, false);
 
+    }
+    public void FinishAnimationTrigger()
+    {
+        triggercalled = true;
     }
  
 

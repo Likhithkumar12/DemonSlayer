@@ -17,6 +17,10 @@ public class PlayerGroundState : PlayerState
     public override void Update()
     {
         base.Update();
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            pllayerStateMachine.Changestate(player.primaryattackState);
+        }
 
         if (Input.GetKeyDown(KeyCode.Space) && player.iusgrounded())
         {

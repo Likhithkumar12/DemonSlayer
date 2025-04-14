@@ -12,26 +12,33 @@ public class PrimaryattackState : PlayerState
     public override void Enter()
     {
         base.Enter();
-       
+
         combocounter++;
         if (combocounter > 2 || lasttimeattacked + combowindow <= Time.time)
         {
             combocounter = 0;
         }
         player.Animator.SetInteger("ComboCounter", combocounter);
+        player.Animator.speed = 1.1f;
+        statetimer = 0.1f;
     
     }
     public override void Update()
     {
         base.Update();
-        if (triggercalled)
+        if (statetimer < 0)
         {
-            pllayerStateMachine.Changestate(player.Playeridle);
+            player.rigidbody2D.linearVelocity = new Vector2(0, 0);
         }
+        if (triggercalled)
+            {
+                pllayerStateMachine.Changestate(player.Playeridle);
+            }
     }
     public override void Exit()
     {
         base.Exit();
         lasttimeattacked = Time.time;
+        player.Animator.speed = 1f;
     }
 }
